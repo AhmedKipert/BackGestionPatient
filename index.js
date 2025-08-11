@@ -14,7 +14,7 @@ const adminRoute = require('./routes/adminRoute');
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
-    origin: 'http://localhost:3000',
+    origin: '*',
     credentials: true
 }));
 
@@ -27,12 +27,7 @@ app.use(adminRoute);
 // Connexion à la BDD
 connectDB();
 
-// Accueil
-app.get('/', (req, res)=> {
-    res.json({nom: "Ahmed kipertino"})
-});
-
 // Lancer le serveur
 app.listen(PORT, ()=> {
-    console.log("Serveur NodeJS en écoute au port 3002");
+    console.log("Serveur NodeJS en écoute au port: ", PORT);
 });

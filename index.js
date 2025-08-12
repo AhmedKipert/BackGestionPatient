@@ -9,12 +9,34 @@ const patientRoute = require('./routes/patientRoute')
 const medecinRoute = require('./routes/medecinRoute');
 const rendezvousRoute = require('./routes/rendezvousRoute');
 const adminRoute = require('./routes/adminRoute');
+const allowedOrigins = ['https://front-gestion-patient.vercel.app'];
 
-// Middlewares
 app.use(cors({
-    origin: 'https://front-gestion-patient.vercel.app',
-    credentials: true
+  origin: function(origin, callback) {
+    // Autoriser les requêtes sans origin (ex: Postman, serveurs internes)
+    if (!origin) return callback(null, true);
+
+    if (allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Origin non autorisée par CORS'));
+    }
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
 }));
+
+// Assure-toi aussi de gérer explicitement les OPTIONS
+app.options('*', cors());
+
+
+// // Middlewares
+// app.use(cors({
+//     origin: 'https://front-gestion-patient.vercel.app',
+//     credentials: true
+// }));
+
 app.use(express.json());
 app.use(cookieParser());
 
@@ -28,7 +50,6 @@ app.use((req, res, next) => {
   console.log(`[${new Date().toISOString()}] ${req.method} ${req.path} Origin: ${req.headers.origin}`);
   next();
 });
-
 
 // Routes
 app.use('/api', patientRoute);

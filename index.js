@@ -25,10 +25,9 @@ app.use(cookieParser());
 // }));
 
 app.use((req, res, next) => {
-    console.log('Origin reçu:', req.headers.origin);
-    next();
+  console.log(`[${new Date().toISOString()}] ${req.method} ${req.path} Origin: ${req.headers.origin}`);
+  next();
 });
-
 
 
 // Routes

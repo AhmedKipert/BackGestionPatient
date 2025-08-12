@@ -16,17 +16,25 @@ app.use(cors({
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
 }));
-
-app.use(express.json());
 app.use(cookieParser());
+app.use(express.json());
 
 
+// Test
 app.use((req, res, next) => {
   console.log(`[${new Date().toISOString()}] ${req.method} ${req.path} Origin: ${req.headers.origin}`);
   next();
 });
 
 // Routes
+// Ajoutez ceci avant les autres routes
+app.get('/', (req, res) => {
+  res.status(200).json({ 
+    status: 'OK',
+    message: 'API en fonctionnement'
+  });
+});
+
 app.use('/api', patientRoute);
 app.use('/api', medecinRoute);
 app.use('/api', rendezvousRoute);

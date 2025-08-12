@@ -40,6 +40,11 @@ app.use('/api', medecinRoute);
 app.use('/api', rendezvousRoute);
 app.use('/api', adminRoute);
 
+// Middleware pour attraper les routes inexistantes
+app.use((req, res) => {
+  res.status(404).json({ error: "Route non trouvée" });
+});
+
 // Connexion à la BDD
 connectDB();
 

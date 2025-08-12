@@ -85,15 +85,17 @@ exports.adminLogin = async (req, res) => {
 
             message = succes;
             const token = jwt.sign(
-                {id: admin._id},
+                { id: admin._id },
                 SECRET_KEY = "Fkipert33225xyz",
-                {expiresIn: '1h'}
+                { expiresIn: '1h' }
             );
 
             res.cookie("token", token, {
                 httpOnly: true,
-                secure: false,
-                maxAge: 3600000
+                secure: true,
+                sameSite: "none",
+                maxAge: 3600000,
+                domain: "backgestionpatient.up.railway.app"
             });
 
             console.log("Cookie envoyé avec succes")

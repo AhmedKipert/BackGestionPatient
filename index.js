@@ -12,7 +12,7 @@ const adminRoute = require('./routes/adminRoute');
 
 // Middlewares
 app.use(cors({
-  origin: 'https://front-gestion-patient.vercel.app',
+  origin: ['https://front-gestion-patient.vercel.app', 'https://backgestionpatient.up.railway.app'],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
 }));

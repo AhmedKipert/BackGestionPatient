@@ -19,10 +19,10 @@ app.use(express.json());
 app.use(cookieParser());
 
 
-app.options('*', cors({
-    origin: 'https://front-gestion-patient.vercel.app',
-    credentials: true
-}));
+// app.options('*', cors({
+//     origin: 'https://front-gestion-patient.vercel.app',
+//     credentials: true
+// }));
 
 app.use((req, res, next) => {
     console.log('Origin reçu:', req.headers.origin);

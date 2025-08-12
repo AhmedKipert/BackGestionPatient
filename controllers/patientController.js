@@ -55,7 +55,7 @@ exports.updatePatient = async(req, res) => {
         const {id} = req.params;
         const infos = req.body;
         
-        await Patient.findByIdAndUpdatem(id, infos);
+        await Patient.findByIdAndUpdate(id, infos);
         await res.json({message: `Patient modifier avec succès`});
 
     } catch (error) {

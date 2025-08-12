@@ -9,24 +9,27 @@ const patientRoute = require('./routes/patientRoute')
 const medecinRoute = require('./routes/medecinRoute');
 const rendezvousRoute = require('./routes/rendezvousRoute');
 const adminRoute = require('./routes/adminRoute');
-const origines = [
-    'http://localhost:3000',
-    'https://front-gestion-patient.vercel.app/'
-]
 
 // Middlewares
 app.use(cors({
-    origin: function(origin, cb) {
-        if(!origin || origines.includes(origin)) {
-            cb(null, true);
-        } else {
-            cb(new Error('Origin non autorisée par CORS'));
-        };
-    },
+    origin: 'https://front-gestion-patient.vercel.app',
     credentials: true
 }));
 app.use(express.json());
 app.use(cookieParser());
+
+
+app.options('*', cors({
+    origin: 'https://front-gestion-patient.vercel.app',
+    credentials: true
+}));
+
+app.use((req, res, next) => {
+    console.log('Origin reçu:', req.headers.origin);
+    next();
+});
+
+
 
 // Routes
 app.use('/api', patientRoute);

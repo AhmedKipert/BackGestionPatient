@@ -31,20 +31,9 @@ app.use(cors({
 app.options('*', cors());
 
 
-// // Middlewares
-// app.use(cors({
-//     origin: 'https://front-gestion-patient.vercel.app',
-//     credentials: true
-// }));
-
 app.use(express.json());
 app.use(cookieParser());
 
-
-// app.options('*', cors({
-//     origin: 'https://front-gestion-patient.vercel.app',
-//     credentials: true
-// }));
 
 app.use((req, res, next) => {
   console.log(`[${new Date().toISOString()}] ${req.method} ${req.path} Origin: ${req.headers.origin}`);

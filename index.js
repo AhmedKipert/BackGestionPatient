@@ -9,20 +9,30 @@ const patientRoute = require('./routes/patientRoute')
 const medecinRoute = require('./routes/medecinRoute');
 const rendezvousRoute = require('./routes/rendezvousRoute');
 const adminRoute = require('./routes/adminRoute');
+const origines = [
+    'http://localhost:3000',
+    'https://front-gestion-patient.vercel.app/'
+]
 
 // Middlewares
-app.use(express.json());
-app.use(cookieParser());
 app.use(cors({
-    origin: '*',
+    origin: function(origin, cb) {
+        if(!origin || origines.includes(origin)) {
+            cb(null, true);
+        } else {
+            cb(new Error('Origin non autorisée par CORS'));
+        };
+    },
     credentials: true
 }));
+app.use(express.json());
+app.use(cookieParser());
 
 // Routes
-app.use(patientRoute);
-app.use(medecinRoute);
-app.use(rendezvousRoute);
-app.use(adminRoute);
+app.use('/api', patientRoute);
+app.use('/api', medecinRoute);
+app.use('/api', rendezvousRoute);
+app.use('/api', adminRoute);
 
 // Connexion à la BDD
 connectDB();

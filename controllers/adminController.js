@@ -98,12 +98,12 @@ exports.adminLogin = async (req, res) => {
                 domain: "backgestionpatient.up.railway.app"
             });
 
-            console.log("Cookie envoyé avec succes")
+            console.log("Cookie envoyé avec succes");
             return res.json({ message, code: 200, token });
         });
 
     } catch (error) {
         console.log(error);
-        await res.json({ message: erreur })
+        res.json({ message: erreur });
     }
 }
